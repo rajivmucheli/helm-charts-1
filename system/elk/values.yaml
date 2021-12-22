@@ -1,6 +1,11 @@
 global:
   region: DEFINED-IN-SECRETS
   tld: DEFINED-IN-SECRETS
+  elk_elasticsearch_audit_user: DEFINED-IN-SECRETS
+  elk_elasticsearch_audit_password: DEFINED-IN-SECRETS
+  elk_elasticsearch_http_user: DEFINED-IN-SECRETS
+  elk_elasticsearch_http_password: DEFINED-IN-SECRETS
+
 
 es_master:
   enabled: false
@@ -42,9 +47,9 @@ wall_e:
 kibana:
   enabled: false
 
-logstash:
+logstash_audit_external:
   enabled: false
-  image_version: '20211015145157'
+  image_version: '20211213084134'
   input_netflow_port: 2055
   input_syslog_port: 514
   input_bigiplogs_port: 1513
@@ -52,10 +57,19 @@ logstash:
   input_deployments_port: 1516
   input_http_port: 443
   tls:
-    enabled: false
     crt: DEFINED-IN-SECRETS
     key: DEFINED-IN-SECRETS
 
+logstash_audit_services:
+  enabled: false
+  image_version: '20211213084134'
+  http_poller:
+    user: DEFINED-IN-SECRETS
+    password: DEFINED-IN-SECRETS
+    url:
+      api: DEFINED-IN-SECRETS
+      token: DEFINED-IN-SECRETS
+      
 fluent:
   enabled: false
   port: 8885
@@ -71,7 +85,7 @@ fluent:
     port: 3306
     db: metis
 
-fluent_octobus:
+fluent_audit_container:
   enabled: false
   port: 8887
   image_version: '20211110123325'

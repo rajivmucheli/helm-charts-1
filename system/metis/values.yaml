@@ -3,7 +3,6 @@ namespace: metis
 mariadb:
   name: metisdb
   enabled: true
-  image: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/mariadb:10.5.12
   dbName: metis
   initdb_configmap: metis-initdb
   ronly_user: ronly
@@ -20,6 +19,13 @@ mariadb:
     enabled: true
     autoprovision:
       enabled: true
+  resources:
+    requests:
+      memory: 2048Mi
+      cpu: 100m
+    limits:
+      memory: 8192Mi
+      cpu: 1000m
   extraConfigFiles:
       metisdb.cnf: |+
         [mysqld]
@@ -40,18 +46,32 @@ mariadb:
     enabled: false
     tier: "infra"
     prometheus: "infra-collector"
+    alert_db_not_ready: false
 
 ingress:
   disco: true
 
 backup_v2:
   enabled: false
+  backup_dir: "./backup"
+  full_backup_cron_schedule: "0 4 1 */2 *"
+  incremental_backup_in_minutes: "-1"
+  image: maria-back-me-up
+  image_version: "20211221151751"
+  enable_init_restore: false
   metrics:
     enabled: true
   alerts:
     enabled: false
     prometheus: "infra-collector"
     tier: "infra"
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 50m
+    limits:
+      memory: 20Gi
+      cpu: 1000m
 
 metis:
   enabled: false

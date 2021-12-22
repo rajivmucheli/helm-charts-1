@@ -87,6 +87,19 @@ data:
               status: "active"
 
             - custom_labels:
+                batch: "cisco-ios-xr_core-router"
+                job: "network/ssh"
+                credential: "default"
+                device: "cisco-ios-xr"
+              metrics_label: "corerouter"
+              role: "core-router"
+              platform: "cisco-ios-xr"
+              tenant: "converged-cloud"
+              target: 1
+              region: "{{ .Values.global.region }}"
+              status: "active"
+
+            - custom_labels:
                 module: "vmware-esxi"
                 job: "vmware-esxi"
               target: 2
@@ -294,6 +307,15 @@ data:
               status: "active"
 
             - custom_labels:
+                module: "pxgeneric"
+                job: "snmp"
+              target: 1
+              metrics_label: "pxgeneric"
+              role: "directlink-router"
+              region: "{{ .Values.global.region }}"
+              status: "active"
+
+            - custom_labels:
                 module: "n3k"
                 job: "snmp"
               target: 1
@@ -481,7 +503,7 @@ data:
               platform: "windows-server"
               tag: "active-directory-domain-controller"
               region: "{{ .Values.global.region }}"
-              
+
             # Windows Update Server for Windows Exporter
             - custom_labels:
                 job: "win-exporter-wsus"
