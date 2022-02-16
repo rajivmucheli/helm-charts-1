@@ -128,7 +128,7 @@ global_observer_role = admin
 provider = f5
 RBAC_test_type = none
 test_with_ipv6 = False
-ccloud_security_group =
+ccloud_security_group = tempest_security_group
 
 [service_available]
 manila = True
