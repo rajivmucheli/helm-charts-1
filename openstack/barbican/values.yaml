@@ -22,6 +22,9 @@ pod:
 api_port_internal: '9311'
 debug: "True"
 
+luna:
+  image: lunaclient
+
 statsd:
   port: 9102
   image:

@@ -118,6 +118,10 @@ spec:
               subPath: ratelimit.yaml
               readOnly: true
             {{- end }}
+        - name: lunaclient
+          image: {{required ".Values.global.registry is missing" .Values.global.registry }}/loci-barbican:{{required "Values.luna.image is missing" .Values.luna.image }}
+          imagePullPolicy: IfNotPresent
+          env: {{ include "lunaclient_environment" $ }}
         - name: statsd
           {{- if hasKey .Values.global "dockerHubMirror"}}
           image: {{.Values.global.dockerHubMirror}}/{{ .Values.statsd.image.repository }}:{{ .Values.statsd.image.tag }}
